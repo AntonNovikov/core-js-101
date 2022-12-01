@@ -28,8 +28,21 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
+function willYouMarryMe(isPositiveAnswer) {
+  return new Promise((resolve, reject) => {
+    if (typeof isPositiveAnswer !== 'boolean') {
+      reject(new Error('Wrong parameter is passed! Ask her again.'));
+      // reject(new Error('Error: Wrong parameter is passed! Ask her again.'));
+    }
+    if (isPositiveAnswer) {
+      resolve('Hooray!!! She said "Yes"!');
+    }
+    if (!isPositiveAnswer) {
+      resolve('Oh no, she said "No".');
+    }
+  });
+
+  // throw new Error('Not implemented');
 }
 
 
@@ -48,8 +61,9 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  return Promise.all(array);
+  // throw new Error('Not implemented');
 }
 
 /**
@@ -71,8 +85,9 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array);
+  // throw new Error('Not implemented');
 }
 
 /**
@@ -92,8 +107,19 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+function chainPromises(array, action) {
+  return new Promise((resolve) => {
+    const newArr = [];
+    array.forEach((promise, ind) => {
+      promise.then((res) => {
+        newArr.push(res);
+        if (ind + 1 === array.length) {
+          resolve(newArr);
+        }
+      });
+    });
+  }).then((arr) => arr.reduce(action));
+  // throw new Error('Not implemented');
 }
 
 module.exports = {
