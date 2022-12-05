@@ -411,8 +411,19 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let result = '';
+  let isEqual = true;
+  let count = 0;
+  while (isEqual) {
+    for (let i = 1; i < pathes.length; i += 1) {
+      isEqual = isEqual && (pathes[0][count] === pathes[i][count]);
+    }
+    if (isEqual) { result += pathes[0][count]; }
+    count += 1;
+  }
+  return result.substring(0, result.lastIndexOf('/') + 1);
+  // throw new Error('Not implemented');
 }
 
 
@@ -434,8 +445,13 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = new Array(m1.length).fill(0).map(() => new Array(m2[0].length).fill(0));
+  return result
+    .map((row, i) => row
+      .map((val, j) => m1[i]
+        .reduce((pre, cur, index) => pre + (cur * m2[index][j]), 0)));
+  // throw new Error('Not implemented');
 }
 
 
